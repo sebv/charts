@@ -53,7 +53,7 @@ subPath: ""
 
 service:
   type: ClusterIP
-  clusterIP: None
+  clusterIP: "-"
   port: 9000
 
 ingress:
