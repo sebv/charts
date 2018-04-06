@@ -27,12 +27,16 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if eq .Values.mode "shared" }}
           {{- if .Values.azuregateway.enabled }}
           args: ["gateway", "azure"]
           {{- else }}
           {{- if .Values.gcsgateway.enabled }}
           args: ["gateway", "gcs", "{{ .Values.gcsgateway.projectId }}"]
           {{- else }}
+          args: ["gateway", "nas", "{{ .Values.mountPath }}"]
+          {{- end }}
+          {{ else }}
           {{- if .Values.configPath }}
           args: ["-C", "{{ .Values.configPath }}", "server", "{{ .Values.mountPath }}"]
           {{- else }}
