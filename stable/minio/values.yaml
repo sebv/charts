@@ -40,6 +40,9 @@ persistence:
   # storageClass: "-"
   accessMode: ReadWriteOnce
   size: 10Gi
+  hostPath:
+    enabled: false
+
 
 ## If subPath is set mount a sub folder of a volume instead of the root of the volume.
 ## This is especially handy for volume plugins that don't natively support sub mounting (like glusterfs).
@@ -50,6 +53,34 @@ subPath: ""
 ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
 ## ref: http://kubernetes.io/docs/user-guide/services/
 ##
+
+cache:
+  enabled: false
+  drives: '/cache'
+  exclude: ''
+  expiry: 0
+  mountPath: "/cache"
+  subPath: ""
+  persistence:
+    enabled: false
+    hostPath:
+      enabled: false
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    # existingClaim:
+
+    ## minio data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 10Gi
 
 service:
   type: ClusterIP
@@ -113,12 +144,6 @@ gcsgateway:
   gcsKeyJson: ""
   # Google cloud project-id
   projectId: ""
-
-cache:
-  enabled: false
-  drives: ''
-  exclude: ''
-  expiry: 0
 
 ## https://docs.minio.io/docs/minio-bucket-notification-guide
 ##
