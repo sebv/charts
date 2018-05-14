@@ -67,6 +67,10 @@ spec:
                 secretKeyRef:
                   name: {{ template "minio.fullname" . }}
                   key: secretkey
+            {{- if not (eq .Values.s3gateway.masterBucket "") }}
+            - name: MINIO_S3_MASTER_BUCKET
+              value: '{{ .Values.s3gateway.masterBucket }}'
+            {{- end }}
             {{- if .Values.cache.enabled }}
             - name: MINIO_CACHE_DRIVES
               value: '{{ .Values.cache.drives }}'
