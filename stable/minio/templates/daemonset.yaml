@@ -1,5 +1,6 @@
 {{- if eq .Values.mode "shared_daemonset" }}
 apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: {{ template "minio.fullname" . }}
